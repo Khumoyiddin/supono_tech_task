@@ -10,6 +10,7 @@ import '../../core/app_assets.dart';
 import '../../core/app_colors.dart';
 import '../../core/app_paddings.dart';
 import '../../core/app_text_styles.dart';
+import '../../core/helpers/birthday_helper.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -21,6 +22,8 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   String? name;
   String formattedBirthday = '';
+
+  final birthdayHelper = BirthdayHelper();
   bool _isAppUnlocked = false;
 
   final InAppReview _inAppReview = InAppReview.instance;
@@ -44,7 +47,7 @@ class _SettingsPageState extends State<SettingsPage> {
     String day = prefs.getString('birthday_day') ?? '';
     String month = prefs.getString('birthday_month') ?? '';
     String year = prefs.getString('birthday_year') ?? '';
-    formattedBirthday = '$day $month $year';
+    formattedBirthday = birthdayHelper.formatBirthday(day, month, year);
     _isAppUnlocked = prefs.getBool('is_app_unlocked') ?? false;
     setState(() {});
   }

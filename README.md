@@ -1,6 +1,29 @@
 ## Khumoyiddin Bakhodirov
 
-A new Flutter project.
+A technical task for Supono.
+
+# Few words about the work
+
+Inside the code there are a few comments explaining the reason I've made that choice, so I don't want to duplicate it here. Besides, few crucial things must be mentioned:
+1) Rate us feature didn't work on either Android simulator or Android real device. As per documentation https://pub.dev/packages/in_app_review#testing-read-carefully, it clearly says that it must be uploadedto the Play Store to test requestReview(), they also recommended an approach to build an app bundle and upload it via internal app sharing, I've tried to upload to internal app sharing, but I don't have a Play Console account, and after several approaches, couldn't succeed to create one.
+2) While creating constants for a project, I faced an issue, where there are niether the documentation of text styles in design nor the proper naming convention, therefore I'd to improvise and came up with the solution you can see in the code. I don't usually name them in that way, but I had to stick to some logic, and this one seemed most reasonable
+3) I didn't use Bloc or any other state managements, because there is no need for that and the deadline is quite short for the amount of tasks are required for a technical task
+4) I didn't separate SharedPrefs usages to a separate file, because I was little tight on time. However I know it wouldn't take much of time, but if I were to refactor it, I would spend some extra time for other parts as well. So shortly, the code can be refactored and cleaned little bit more
+5) I didn't use any architecture, because I didn't use any state management, there were no space for architecture. The technical task seemed asking more of skill and paying attention to details rather than architectural thing. Maybe I'm wrong, if so excuse me! 
+
+This was like a cons, and I've explained it, because in the documentation it's written that it on Android Simulator should work fully functional without crashes. Well there are no crashes, but the functionality isn't working.
+
+So now about pros:
+1) I've added the error message, and a simple validation on onboarding screens. Again because documentation states '... must ...', but there is no design for it, as a result I've come up with a simple yet effective solution.
+2) Tested on both iOS simulator and iPhone. On iPhone everything works perfectly fine, and on simulator everything except camera.
+3) Created default states and screens for Camera and Preview pages, which weren't provided in figma design
+4) In the documentation, it wasn't mentioned what is supposed to do the read cancel button on Preview page, so I decided to navigate to Settings page and pop up the dialog.
+5) It wasn't implicitly said in the documentation that the onboarding screens should split the images in the code, and not exporting them separately from figma. But it was attached to files with Task #1, so I decided to have a big picture being shared among 4 screens.
+6) Tried to keep the code clean, by separating extensions, helpers, widgets, buttons, styles and so on... Yet it was difficult to show off the skills, as the desing was lacking concreteness and information.
+
+I beileve this is all I wanted to add, looking forward for a feedback!
+
+Thanks!
 
 # Java version
 

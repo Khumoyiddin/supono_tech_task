@@ -81,3 +81,6 @@ en-UZ)
 • All expected network resources are available.
 
 • No issues found!
+
+[khumoyiddin_bakhodirov_flutter.apk.zip](https://github.com/user-attachments/files/17891323/khumoyiddin_bakhodirov_flutter.apk.zip)
+

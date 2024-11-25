@@ -1,0 +1,19 @@
+{
+  "@@locale": "en",
+  "current_language": "English",
+  "splash_title": "Are you ready for\n your test?",
+  "splash_subtitle": "Start now by creating your profile and connect!",
+  "continue_text": "Continue",
+  "settings": "Settings",
+  "unlock_up": "Unlock up",
+  "unlock_up_sure": "Are you sure you want to unlock the app?",
+  "yes": "Yes",
+  "no": "No",
+  "rate_us": "Rate us",
+  "my_account": "My Account",
+  "username": "Username",
+  "no_name": "No name",
+  "birthday": "Birthday",
+  "language": "Language",
+  "change_language": "Change language"
+}

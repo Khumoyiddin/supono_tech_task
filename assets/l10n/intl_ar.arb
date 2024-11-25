@@ -1,0 +1,19 @@
+{
+  "@@locale": "ar",
+  "current_language": "لغة",
+  "splash_title": "هل أنت مستعد للاختبار الخاص بك؟",
+  "splash_subtitle": "ابدأ الآن بإنشاء ملفك الشخصي والتواصل!",
+  "continue_text": "يكمل",
+  "settings": "الإعدادات",
+  "unlock_up": "فتح القفل",
+  "unlock_up_sure": "هل أنت متأكد أنك تريد إلغاء قفل التطبيق؟",
+  "yes": "نعم",
+  "no": "لا",
+  "rate_us": "قيمنا",
+  "my_account": "حسابي",
+  "username": "اسم المستخدم",
+  "no_name": "لا يوجد اسم",
+  "birthday": "عيد الميلاد",
+  "language": "اللغة",
+  "change_language": "تغيير اللغة"
+}

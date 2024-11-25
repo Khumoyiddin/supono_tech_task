@@ -5,11 +5,12 @@ import 'package:camera/camera.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/app_assets.dart';
 import '../../core/app_colors.dart';
+import '../../core/network/shared_prefs.dart';
 import '../../core/router/app_router_names.dart';
+import 'widgets/ad_cancel_button.dart';
 
 const _testAdUnitID = 'ca-app-pub-3940256099942544/6300978111';
 
@@ -31,33 +32,7 @@ class _PhotoPreviewPageState extends State<PhotoPreviewPage> {
   void initState() {
     super.initState();
     _loadValues();
-
-    _bannerAd = BannerAd(
-      adUnitId: _testAdUnitID,
-      size: AdSize.banner,
-      request: AdRequest(),
-      listener: BannerAdListener(
-        onAdLoaded: (ad) {
-          setState(() => _isBannerAdLoaded = true);
-        },
-        onAdFailedToLoad: (ad, error) {
-          setState(() => _isBannerAdLoaded = false);
-          log('Banner ad failed to load: $error');
-        },
-      ),
-    );
-
-    _bannerAd.load();
-  }
-
-  Future<void> _loadValues() async {
-    final prefs = await SharedPreferences.getInstance();
-    _isAppUnlocked = prefs.getBool('is_app_unlocked') ?? false;
-    setState(() {});
-  }
-
-  void _onCancelButtonPressed() {
-    context.push(AppRouterNames.settings, extra: true);
+    _initializeAndLoadBanner();
   }
 
   @override
@@ -101,40 +76,38 @@ class _PhotoPreviewPageState extends State<PhotoPreviewPage> {
             ),
           ),
           if (!_isAppUnlocked)
-            Positioned(
-              bottom: 0,
-              right: 0,
-              left: 0,
-              child: Column(
-                children: [
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: GestureDetector(
-                      onTap: _onCancelButtonPressed,
-                      child: Image.asset(
-                        height: 22,
-                        width: 72,
-                        PngAssets.cancelButton,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    height: 92,
-                    color: AppColors.black,
-                    child: Center(
-                      child: _isBannerAdLoaded == true
-                          ? AdWidget(ad: _bannerAd)
-                          : _isBannerAdLoaded == null
-                              ? CircularProgressIndicator(color: AppColors.white)
-                              : Text("Could not load the ads"),
-                    ),
-                  ),
-                ],
-              ),
+            AdCancelButton(
+              bannerAd: _bannerAd,
+              isBannerAdLoaded: _isBannerAdLoaded,
             ),
         ],
       ),
     );
+  }
+
+  void _initializeAndLoadBanner() {
+    _bannerAd = BannerAd(
+      adUnitId: _testAdUnitID,
+      size: AdSize.banner,
+      request: AdRequest(),
+      listener: BannerAdListener(
+        onAdLoaded: (ad) {
+          setState(() => _isBannerAdLoaded = true);
+        },
+        onAdFailedToLoad: (ad, error) {
+          setState(() => _isBannerAdLoaded = false);
+          log('Banner ad failed to load: $error');
+        },
+      ),
+    );
+
+    _bannerAd.load();
+  }
+
+  void _loadValues() {
+    final prefs = SharedPreferencesHelper.instance;
+    _isAppUnlocked = prefs.getIsAppUnlocked();
+    setState(() {});
   }
 
   @override

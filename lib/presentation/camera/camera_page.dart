@@ -4,13 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:camera/camera.dart';
-import 'package:khumoyiddin_bakhodirov_flutter/core/app_paddings.dart';
-import 'package:khumoyiddin_bakhodirov_flutter/core/app_text_styles.dart';
-import 'package:khumoyiddin_bakhodirov_flutter/core/widgets/app_text_button.dart';
 
 import '../../core/app_assets.dart';
 import '../../core/app_colors.dart';
+import '../../core/app_paddings.dart';
 import '../../core/router/app_router_names.dart';
+import 'widgets/camera_not_found_state.dart';
 
 class CameraPage extends StatefulWidget {
   const CameraPage({super.key});
@@ -22,6 +21,7 @@ class CameraPage extends StatefulWidget {
 class _CameraPageState extends State<CameraPage> {
   late CameraController _controller;
   late List<CameraDescription> cameras;
+
   bool _isCameraAvailable = true;
   bool _isCameraInitialized = false;
   int _selectedCameraIndex = 0;
@@ -30,6 +30,75 @@ class _CameraPageState extends State<CameraPage> {
   void initState() {
     super.initState();
     _initializeCamera();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (!_isCameraAvailable) {
+      return Scaffold(
+        body: Center(
+          child: Stack(
+            children: [
+              CameraNotFoundState(),
+              _configurationItems(false),
+            ],
+          ),
+        ),
+      );
+    }
+
+    if (!_isCameraInitialized) {
+      return Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    return Scaffold(
+      body: Center(
+        child: Stack(
+          children: [
+            CameraPreview(_controller),
+            _configurationItems(true),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _configurationItems(bool showTakePhoto) {
+    return Positioned.fill(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          SafeArea(
+            child: Padding(
+              padding: AppPaddings.horizontalTop,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                    onTap: () => context.pop(),
+                    child: SvgPicture.asset(
+                      SvgAssets.icBack,
+                      colorFilter: ColorFilter.mode(AppColors.greyCC, BlendMode.srcIn),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: _switchCamera,
+                    child: Image.asset(width: 44, height: 44, PngAssets.icReverse),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          if (showTakePhoto)
+            GestureDetector(
+              onTap: _takePhoto,
+              child: SvgPicture.asset(SvgAssets.takePhotoButton),
+            ),
+        ],
+      ),
+    );
   }
 
   Future<void> _initializeCamera() async {
@@ -92,105 +161,6 @@ class _CameraPageState extends State<CameraPage> {
         const SnackBar(content: Text("No other camera available")),
       );
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (!_isCameraAvailable) {
-      return Scaffold(
-        body: Center(
-          child: Stack(
-            children: [
-              SafeArea(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Spacer(),
-                    const Icon(Icons.camera_alt, size: 100, color: Colors.grey),
-                    const SizedBox(height: 20),
-                    SizedBox(
-                      width: double.infinity,
-                      child: Text(
-                        'No camera found. \nPlease try on a physical device.',
-                        textAlign: TextAlign.center,
-                        style: AppTextStyles.settings16.copyWith(color: AppColors.grey95),
-                      ),
-                    ),
-                    Spacer(),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 25),
-                      child: AppTextButton(
-                        onPressed: () => context.push(AppRouterNames.photoPreview),
-                        text: 'Continue to photo preview page.',
-                      ),
-                    ),
-                    SizedBox(height: 17),
-                  ],
-                ),
-              ),
-              _configurationItems(false),
-            ],
-          ),
-        ),
-      );
-    }
-
-    if (!_isCameraInitialized) {
-      return Scaffold(
-        body: Center(child: CircularProgressIndicator()),
-      );
-    }
-
-    return Scaffold(
-      body: Center(
-        child: Stack(
-          children: [
-            CameraPreview(_controller),
-            _configurationItems(true),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _configurationItems(bool showTakePhoto) {
-    return Positioned.fill(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          SafeArea(
-            child: Padding(
-              padding: AppPaddings.horizontalTop,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(
-                    onTap: () => context.pop(),
-                    child: SvgPicture.asset(
-                      SvgAssets.icBack,
-                      colorFilter: ColorFilter.mode(AppColors.greyCC, BlendMode.srcIn),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: _switchCamera,
-                    child: Image.asset(
-                      width: 44,
-                      height: 44,
-                      PngAssets.icReverse,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          if (showTakePhoto)
-            GestureDetector(
-              onTap: _takePhoto,
-              child: SvgPicture.asset(SvgAssets.takePhotoButton),
-            ),
-        ],
-      ),
-    );
   }
 
   @override

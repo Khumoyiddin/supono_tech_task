@@ -6,6 +6,7 @@ import '../../core/app_colors.dart';
 import '../../core/app_text_styles.dart';
 import '../../core/router/app_router_names.dart';
 import '../../core/widgets/app_text_button.dart';
+import '../../l10n/l10n.dart';
 
 class SplashPage extends StatelessWidget {
   const SplashPage({super.key});
@@ -42,13 +43,13 @@ class SplashPage extends StatelessWidget {
                 children: [
                   SizedBox(height: 30),
                   Text(
-                    'Are you ready for\n your test?',
+                    S.of(context).splash_title,
                     style: AppTextStyles.textStyle25,
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(height: 11),
                   Text(
-                    'Start now by creating your profile and connect!',
+                    S.of(context).splash_subtitle,
                     style: AppTextStyles.splash16,
                     textAlign: TextAlign.center,
                   ),
@@ -56,7 +57,7 @@ class SplashPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25),
                     child: AppTextButton(
-                      text: 'Continue',
+                      text: S.of(context).continue_text,
                       onPressed: () => context.push(AppRouterNames.onboarding),
                     ),
                   ),

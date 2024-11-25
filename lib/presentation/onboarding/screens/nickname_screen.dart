@@ -2,11 +2,11 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/app_colors.dart';
 import '../../../core/app_text_styles.dart';
-import '../../../core/helpers/app_input_decoration_extension.dart';
+import '../../../core/network/shared_prefs.dart';
+import '../widgets/nickname_text_field.dart';
 
 class NicknameScreen extends StatefulWidget {
   final Function() onPressed;
@@ -25,25 +25,6 @@ class _NicknameScreenState extends State<NicknameScreen> with AutomaticKeepAlive
   void initState() {
     super.initState();
     _controller.addListener(_removeErrorMessage);
-  }
-
-  void _removeErrorMessage() {
-    if (showErrorMessage == true) {
-      setState(() => showErrorMessage = false);
-    }
-  }
-
-  bool _isInputValid() {
-    return _controller.text.trim().isNotEmpty;
-  }
-
-  Future<void> _saveNickname() async {
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('nickname', _controller.text.trim());
-    } catch (e) {
-      log('Exception caught in nickname screen $e');
-    }
   }
 
   @override
@@ -100,6 +81,25 @@ class _NicknameScreenState extends State<NicknameScreen> with AutomaticKeepAlive
     );
   }
 
+  void _removeErrorMessage() {
+    if (showErrorMessage == true) {
+      setState(() => showErrorMessage = false);
+    }
+  }
+
+  bool _isInputValid() {
+    return _controller.text.trim().isNotEmpty;
+  }
+
+  Future<void> _saveNickname() async {
+    try {
+      final prefs = SharedPreferencesHelper.instance;
+      await prefs.setNickname(_controller.text.trim());
+    } catch (e) {
+      log('Exception caught in nickname screen $e');
+    }
+  }
+
   @override
   void dispose() {
     _controller.removeListener(_removeErrorMessage);
@@ -109,24 +109,4 @@ class _NicknameScreenState extends State<NicknameScreen> with AutomaticKeepAlive
 
   @override
   bool get wantKeepAlive => true;
-}
-
-class NicknameTextField extends StatelessWidget {
-  final TextEditingController controller;
-
-  const NicknameTextField({super.key, required this.controller});
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: TextField(
-        controller: controller,
-        cursorColor: AppColors.grey95,
-        style: AppTextStyles.textStyle25,
-        keyboardType: TextInputType.text,
-        decoration: AppInputDecoration.withCustomBorder(),
-      ),
-    );
-  }
 }

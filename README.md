@@ -2,6 +2,49 @@
 
 A technical task for Supono.
 
+# Explanation and justification for Task #2
+1) CSS Styling: I'm not sure what's meant by it, but I considered it as for code refactoring or using constants for text styling, colors. So I'm not sure on this one
+2) Security: I know what this is, but not sure what to secure. If it was to have more secure storage usage, then I'd have to replace SharedPrefs with DBs such as Hive, but I don't think this is reasonable here, that's why I didn't do this one
+3) Recheck your bugs...: Again not sure what exactly meant by it, I mean I did check the app before submission, and re checked after it was mentioned. So I tried to fix the possible errors, but didn't face any bugs that let to crash or violate the logic
+4) I have implemented i18n, RTL and arabic. For show case I only did it on 2 screens, splash and settings. There are 2 languages, English and Arabic. Moreoever, I added 'Change language' button in Settings page, so you can test it there as well
+5) Input validation was optimizeed and improved as far as I could imagine the proper validation
+6) Indexing between fields were fixed
+7) Error handling: not sure which errors should be handled, so I did it only in BirthdayScreen
+8) Crashlytics working on both iOS and Android simulators, and can be tracked on Firebase Crashlytics console. I left a commneted code in SettingsPage if you wish to test it. On real devices: Android works just fine, while iPhone would not crash but Xcode would give the following crash messaage in the console: Terminating app due to uncaught exception 'FirebaseCrashlyticsTestCrash', reason: 'This is a test crash caused by calling .crash() in Dart.'. So in case you don't see a crash report on iPhone debug mode
+9) Responsiveness: It's already responsive, I've tested it on various size mobile devices, and made sure there are no overflowings. Yet, it can be improved, by making the size of the text scalable, for instance if the user's settings for text are larger. But in most cases, one should have a design for that, that's why I don't see it reasonable
+10) Documentation: Not sure what to document. Code is simple and easy to follow, because of the good naming of classes and functions. The documentation could be done for Firebase set up, i18n set up, code generation samples. But again didn't see it reasonable
+
+Optimize the following then explain/justify how you did it in a README.md file:
+
+- Memory usage
+- CPU usage
+- Battery usage
+- Network usage
+
+Not sure what to say about Memory usage..., It's a simple app, where there are no heavy operation going on, the only thing that might take some usage in them is Camera operation, and what am I supposed to say here? I don't know what to say.
+
+And the answer for your question: No I don't believe I can make a bug free app, because code is code, and it isn't perfect. I'm talking about the mid and big size apps, where you have several dozens of features and lost count of numbers of files. One can have an app that is optimized after a several lifecycles of testing, but still there are always a way to find a bug, that's not always depends on code, but rather on a specific device platform, version that might be outdated. I mean even when you use the plugins and packages, you can't be 100% sure that it is working bug free, so the reason after all that you have a bug might be not you, but the package owner, and so on. There are plenty of ways there might be a bug.
+
+# My opinion about the technical task
+1) The details are very vague. I should have made a research to understand what was meant by it, and even failed to understand some of them (already explained above)
+2) The design is very poor, while it's asked later to optimize the input validation. I believe there should be a design for that, error cases...
+3) The technical task is asking for too much. Honestly, I'd not do it if I wouldn't get a recommendation from my friend Asadbek. Even after completing all the things that are asked, what is exactly the examiner is trying to check? The ability to use tools, which are common knowledge, or is it how the candidate understands the task that's poorly informed? I understand that there are no tech interviews, but still, 48h+36h are almost 4 working days. If you intend to make them do it, then at least you should pay them a min amount. That's how the may companies do, when they ask to complete a technical task that takes more that 8 hours. Moreover, a candidate at least expects a feedback. Maybe you give one after second task, but it's still neccessary to do it after task 1.
+When you ask someone to complete a technical task, you should emphosize on what you're going to judge. Only then the candidate will understand that and try to show case his knowledge. While you just ask to complete the task with poor details, and in task one without any feedback and little information what to do, just ask to optimize and list things to do.
+I'm glad you asked this question, because i wanted to mention it to you anyway, in hope for you to help, and not just to complain, an honest feedback :)
+
+Thanks,
+Khumoyiddin
+
+
+
+
+
+
+
+
+
+
+
 # Few words about the work
 
 Inside the code there are a few comments explaining the reason I've made that choice, so I don't want to duplicate it here. Besides, few crucial things must be mentioned:
